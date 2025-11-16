@@ -44,32 +44,12 @@ Deno.serve(async (req: Request) => {
 
     const supabase = createClient(supabaseUrl!, supabaseKey!);
 
-    const prompt = `Create an engaging, interactive lesson about:
+    const prompt = `Create a brief, well-structured lesson (800-1200 characters max) about:
 
 ${outline}
 
-Structure the lesson with:
-1. **Introduction** - Brief, engaging overview with relevant context
-2. **Main Content** - Key concepts with clear explanations, bullet points, and examples
-3. **Visual Examples** - Use code blocks, blockquotes, or formatted sections to illustrate concepts
-4. **Practice Questions** - Include 3-5 multiple choice quiz questions under a "## Quiz" heading
-
-Format the quiz questions EXACTLY like this:
-## Quiz
-
-1. What is [question text]?
-   A) Option 1
-   B) Option 2
-   C) Option 3
-   D) Option 4
-
-2. [Next question]?
-   A) Option 1
-   B) Option 2
-   C) Option 3
-   D) Option 4
-
-Use markdown formatting with headers, bold text, bullet points, and code blocks. Keep it engaging and educational.`;
+Include: introduction, main points (bullet format), one example, and 3 practice questions.
+Use markdown. Be concise.`;
 
     console.log(`[${lessonId}] Calling Gemini API...`);
 
@@ -91,8 +71,8 @@ Use markdown formatting with headers, bold text, bullet points, and code blocks.
             },
           ],
           generationConfig: {
-            maxOutputTokens: 2000,
-            temperature: 0.7,
+            maxOutputTokens: 800,
+            temperature: 0.5,
           },
         }),
       }

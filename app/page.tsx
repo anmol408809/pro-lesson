@@ -160,32 +160,27 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-600 via-pink-500 to-orange-500 relative overflow-hidden">
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-to-br from-blue-400/30 to-transparent rounded-full blur-3xl animate-pulse" />
-        <div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-to-tl from-orange-400/30 to-transparent rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 py-12 space-y-8 relative z-10">
-        <div className="text-center space-y-4 animate-fade-in">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900">
+      <div className="max-w-6xl mx-auto px-4 py-12 space-y-8">
+        <div className="text-center space-y-4">
           <div className="flex items-center justify-center gap-3">
-            <BookOpen className="h-12 w-12 text-white drop-shadow-lg animate-bounce" style={{ animationDuration: '2s' }} />
-            <h1 className="text-5xl md:text-6xl font-bold text-white drop-shadow-2xl">
+            <BookOpen className="h-12 w-12 text-blue-600" />
+            <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
               AI Lesson Generator
             </h1>
           </div>
-          <p className="text-xl text-white/90 max-w-2xl mx-auto drop-shadow-lg">
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Transform your lesson outlines into comprehensive, interactive educational content powered by AI
           </p>
         </div>
 
-        <Card className="shadow-2xl border-0 backdrop-blur-xl bg-white/10 hover:bg-white/15 transition-all duration-300 hover:scale-[1.02] animate-slide-up">
+        <Card className="shadow-lg border-2">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-white">
-              <Sparkles className="h-5 w-5 text-yellow-300 animate-pulse" />
+            <CardTitle className="flex items-center gap-2">
+              <Sparkles className="h-5 w-5 text-yellow-500" />
               Create a New Lesson
             </CardTitle>
-            <CardDescription className="text-white/80">
+            <CardDescription>
               Enter a lesson outline, topic, or description and let AI generate a complete lesson for you
             </CardDescription>
           </CardHeader>
@@ -195,14 +190,14 @@ export default function Home() {
                 placeholder="Example: 'A one-pager on how to divide with long division' or 'A 10-question pop quiz on Florida' or 'An explanation of how the Cartesian Grid works'"
                 value={outline}
                 onChange={(e) => setOutline(e.target.value)}
-                className="min-h-32 text-base resize-none backdrop-blur-sm bg-white/90 border-white/30 focus:border-white/60 text-slate-900 placeholder:text-slate-500"
+                className="min-h-32 text-base resize-none"
                 disabled={isGenerating}
               />
             </div>
             <Button
               onClick={generateLesson}
               disabled={!outline.trim() || isGenerating}
-              className="w-full h-12 text-base font-semibold bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]"
+              className="w-full h-12 text-base font-semibold"
               size="lg"
             >
               {isGenerating ? (
@@ -220,10 +215,10 @@ export default function Home() {
           </CardContent>
         </Card>
 
-        <Card className="shadow-2xl border-0 backdrop-blur-xl bg-white/10 animate-slide-up" style={{ animationDelay: '0.1s' }}>
+        <Card className="shadow-lg">
           <CardHeader>
-            <CardTitle className="text-white">Your Lessons</CardTitle>
-            <CardDescription className="text-white/80">
+            <CardTitle>Your Lessons</CardTitle>
+            <CardDescription>
               {lessons.length === 0
                 ? 'No lessons yet. Create your first lesson above!'
                 : `${lessons.length} lesson${lessons.length !== 1 ? 's' : ''} generated`}
@@ -231,44 +226,44 @@ export default function Home() {
           </CardHeader>
           <CardContent>
             {lessons.length > 0 ? (
-              <div className="border border-white/20 rounded-lg overflow-hidden backdrop-blur-sm bg-white/5">
+              <div className="border rounded-lg overflow-hidden">
                 <Table>
                   <TableHeader>
-                    <TableRow className="bg-white/10 hover:bg-white/10 border-b border-white/20">
-                      <TableHead className="font-semibold text-white">Lesson Outline</TableHead>
-                      <TableHead className="font-semibold w-32 text-white">Status</TableHead>
-                      <TableHead className="font-semibold w-40 text-white">Created</TableHead>
-                      <TableHead className="font-semibold w-16 text-right text-white">Action</TableHead>
+                    <TableRow className="bg-muted/50">
+                      <TableHead className="font-semibold">Lesson Outline</TableHead>
+                      <TableHead className="font-semibold w-32">Status</TableHead>
+                      <TableHead className="font-semibold w-40">Created</TableHead>
+                      <TableHead className="font-semibold w-16 text-right">Action</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {lessons.map((lesson) => (
                       <TableRow
                         key={lesson.id}
-                        className="group hover:bg-white/10 transition-all duration-300 border-b border-white/10"
+                        className="group hover:bg-muted/30 transition-colors"
                       >
                         <TableCell>
                           {lesson.status === 'generated' ? (
                             <Link
                               href={`/lessons/${lesson.id}`}
-                              className="text-white hover:text-cyan-300 hover:underline font-medium flex items-center gap-2 group transition-colors"
+                              className="text-blue-600 hover:text-blue-800 hover:underline font-medium flex items-center gap-2 group"
                             >
                               <BookOpen className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity" />
                               {lesson.outline}
                             </Link>
                           ) : (
-                            <span className="text-white/70">
+                            <span className="text-muted-foreground">
                               {lesson.outline}
                             </span>
                           )}
                           {lesson.error_message && (
-                            <p className="text-sm text-red-300 mt-1">
+                            <p className="text-sm text-destructive mt-1">
                               Error: {lesson.error_message}
                             </p>
                           )}
                         </TableCell>
                         <TableCell>{getStatusBadge(lesson.status)}</TableCell>
-                        <TableCell className="text-sm text-white/70">
+                        <TableCell className="text-sm text-muted-foreground">
                           {formatDistanceToNow(new Date(lesson.created_at), {
                             addSuffix: true,
                           })}
@@ -294,9 +289,9 @@ export default function Home() {
                 </Table>
               </div>
             ) : (
-              <div className="text-center py-16 text-white/70">
-                <BookOpen className="h-16 w-16 mx-auto mb-4 opacity-30" />
-                <p className="text-lg text-white">No lessons yet</p>
+              <div className="text-center py-16 text-muted-foreground">
+                <BookOpen className="h-16 w-16 mx-auto mb-4 opacity-20" />
+                <p className="text-lg">No lessons yet</p>
                 <p className="text-sm">Create your first lesson to get started</p>
               </div>
             )}
